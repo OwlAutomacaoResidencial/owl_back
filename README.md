@@ -6,10 +6,10 @@ Developed on Jessie Debian. <br>
 
 # Dependencies
 
- - Boost 1.55.0
- - MySQL Connector/C++
- - RapidJson
- - Crow
+ - Boost 1.55.0 <b>(included but need setup) </b>
+ - MySQL Connector/C++ (included>
+ - RapidJson (included)
+ - Crow (included)
 
 # How to install dependencies
 
