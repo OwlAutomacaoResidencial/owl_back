@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeLite_Project Name="owl_back" Version="10.0.0" InternalType="Console">
+  <Plugins>
+    <Plugin Name="qmake">
+      <![CDATA[00010001N0005Debug000000000000]]>
+    </Plugin>
+  </Plugins>
+  <VirtualDirectory Name="headers">
+    <File Name="headers/Utilities.h"/>
+    <VirtualDirectory Name="usuarios">
+      <File Name="headers/usuarios/usuario.h"/>
+    </VirtualDirectory>
+    <VirtualDirectory Name="sensores">
+      <File Name="headers/sensores/sensor.h"/>
+      <File Name="headers/sensores/SensorManager.h"/>
+    </VirtualDirectory>
+    <VirtualDirectory Name="networking">
+      <File Name="headers/networking/ServerPackets.h"/>
+      <File Name="headers/networking/Server.h"/>
+      <File Name="headers/networking/Packet.h"/>
+      <File Name="headers/networking/ClientPackets.h"/>
+      <File Name="headers/networking/ClientManager.h"/>
+      <File Name="headers/networking/Client.h"/>
+      <File Name="headers/networking/CSClientConnectionInfo.h"/>
+    </VirtualDirectory>
+    <VirtualDirectory Name="mweb">
+      <File Name="headers/mweb/WebRouter.h"/>
+    </VirtualDirectory>
+    <VirtualDirectory Name="logging">
+      <File Name="headers/logging/Logger.h"/>
+    </VirtualDirectory>
+    <VirtualDirectory Name="json">
+      <VirtualDirectory Name="serializer">
+        <File Name="headers/json/serializer/UsuarioSerializer.h"/>
+        <File Name="headers/json/serializer/SensorSerializer.h"/>
+        <File Name="headers/json/serializer/ComodoSerializer.h"/>
+      </VirtualDirectory>
+    </VirtualDirectory>
+    <VirtualDirectory Name="database">
+      <VirtualDirectory Name="dao">
+        <File Name="headers/database/dao/DAOUsuarios.h"/>
+        <File Name="headers/database/dao/DAOSensores.h"/>
+        <File Name="headers/database/dao/DAOComodos.h"/>
+      </VirtualDirectory>
+      <File Name="headers/database/mysql_manager.h"/>
+      <File Name="headers/database/datasheet.h"/>
+    </VirtualDirectory>
+    <VirtualDirectory Name="controls">
+      <File Name="headers/controls/UsuarioControl.h"/>
+      <File Name="headers/controls/SensorControl.h"/>
+      <File Name="headers/controls/ComodoControl.h"/>
+    </VirtualDirectory>
+    <VirtualDirectory Name="comodos">
+      <File Name="headers/comodos/comodo.h"/>
+    </VirtualDirectory>
+  </VirtualDirectory>
+  <Description/>
+  <Dependencies/>
+  <VirtualDirectory Name="source">
+    <VirtualDirectory Name="networking">
+      <File Name="source/networking/Server.cpp"/>
+      <File Name="source/networking/SensorManager.cpp"/>
+      <File Name="source/networking/ClientManager.cpp"/>
+      <File Name="source/networking/Client.cpp"/>
+    </VirtualDirectory>
+    <VirtualDirectory Name="mweb">
+      <File Name="source/mweb/WebRouter.cpp"/>
+    </VirtualDirectory>
+    <VirtualDirectory Name="logging">
+      <File Name="source/logging/Logger.cpp"/>
+    </VirtualDirectory>
+    <VirtualDirectory Name="json">
+      <VirtualDirectory Name="serialize">
+        <File Name="source/json/serializer/UsuarioSerializer.cpp"/>
+        <File Name="source/json/serializer/SensorSerializer.cpp"/>
+        <File Name="source/json/serializer/ComodoSerializer.cpp"/>
+      </VirtualDirectory>
+    </VirtualDirectory>
+    <VirtualDirectory Name="database">
+      <File Name="source/database/mysql_manager.cpp"/>
+      <File Name="source/database/datasheet.cpp"/>
+      <VirtualDirectory Name="dao">
+        <File Name="source/database/dao/DAOUsuarios.cpp"/>
+        <File Name="source/database/dao/DAOSensores.cpp"/>
+        <File Name="source/database/dao/DAOComodos.cpp"/>
+      </VirtualDirectory>
+    </VirtualDirectory>
+    <VirtualDirectory Name="controls">
+      <File Name="source/controls/UsuarioControl.cpp"/>
+      <File Name="source/controls/SensorControl.cpp"/>
+      <File Name="source/controls/ComodoControl.cpp"/>
+    </VirtualDirectory>
+    <File Name="source/main.cpp"/>
+  </VirtualDirectory>
+  <Settings Type="Executable">
+    <GlobalSettings>
+      <Compiler Options="" C_Options="" Assembler="">
+        <IncludePath Value="."/>
+      </Compiler>
+      <Linker Options="">
+        <LibraryPath Value="."/>
+      </Linker>
+      <ResourceCompiler Options=""/>
+    </GlobalSettings>
+    <Configuration Name="Debug" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="prepend" BuildResWithGlobalSettings="append">
+      <Compiler Options="-g;-O0;-Wall" C_Options="-g;-O0;-Wall" Assembler="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" PCHFlags="" PCHFlagsPolicy="0">
+        <IncludePath Value="."/>
+        <IncludePath Value="include/"/>
+      </Compiler>
+      <Linker Options="-lboost_system -pthread -lboost_thread -lmysqlcppconn" Required="yes">
+        <LibraryPath Value="lib/boost/"/>
+      </Linker>
+      <ResourceCompiler Options="" Required="no"/>
+      <General OutputFile="$(IntermediateDirectory)/$(ProjectName)" IntermediateDirectory="./Debug" Command="./$(ProjectName)" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes" IsGUIProgram="no" IsEnabled="yes"/>
+      <BuildSystem Name="Default"/>
+      <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">
+        <![CDATA[]]>
+      </Environment>
+      <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="" IsExtended="yes">
+        <DebuggerSearchPaths/>
+        <PostConnectCommands/>
+        <StartupCommands/>
+      </Debugger>
+      <PreBuild/>
+      <PostBuild/>
+      <CustomBuild Enabled="no">
+        <RebuildCommand/>
+        <CleanCommand/>
+        <BuildCommand/>
+        <PreprocessFileCommand/>
+        <SingleFileCommand/>
+        <MakefileGenerationCommand/>
+        <ThirdPartyToolName>None</ThirdPartyToolName>
+        <WorkingDirectory/>
+      </CustomBuild>
+      <AdditionalRules>
+        <CustomPostBuild/>
+        <CustomPreBuild/>
+      </AdditionalRules>
+      <Completion EnableCpp11="no" EnableCpp14="no">
+        <ClangCmpFlagsC/>
+        <ClangCmpFlags/>
+        <ClangPP/>
+        <SearchPaths/>
+      </Completion>
+    </Configuration>
+    <Configuration Name="Release" CompilerType="gnu gcc" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
+      <Compiler Options="-O2;-Wall" C_Options="-O2;-Wall" Assembler="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" PCHFlags="" PCHFlagsPolicy="0">
+        <IncludePath Value="."/>
+        <Preprocessor Value="NDEBUG"/>
+      </Compiler>
+      <Linker Options="" Required="yes"/>
+      <ResourceCompiler Options="" Required="no"/>
+      <General OutputFile="$(IntermediateDirectory)/$(ProjectName)" IntermediateDirectory="./Release" Command="./$(ProjectName)" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes" IsGUIProgram="no" IsEnabled="yes"/>
+      <BuildSystem Name="Default"/>
+      <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">
+        <![CDATA[]]>
+      </Environment>
+      <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="" IsExtended="yes">
+        <DebuggerSearchPaths/>
+        <PostConnectCommands/>
+        <StartupCommands/>
+      </Debugger>
+      <PreBuild/>
+      <PostBuild/>
+      <CustomBuild Enabled="no">
+        <RebuildCommand/>
+        <CleanCommand/>
+        <BuildCommand/>
+        <PreprocessFileCommand/>
+        <SingleFileCommand/>
+        <MakefileGenerationCommand/>
+        <ThirdPartyToolName>None</ThirdPartyToolName>
+        <WorkingDirectory/>
+      </CustomBuild>
+      <AdditionalRules>
+        <CustomPostBuild/>
+        <CustomPreBuild/>
+      </AdditionalRules>
+      <Completion EnableCpp11="no" EnableCpp14="no">
+        <ClangCmpFlagsC/>
+        <ClangCmpFlags/>
+        <ClangPP/>
+        <SearchPaths/>
+      </Completion>
+    </Configuration>
+  </Settings>
+</CodeLite_Project>
