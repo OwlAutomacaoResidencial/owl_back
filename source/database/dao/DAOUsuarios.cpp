@@ -3,7 +3,6 @@
 
 #include <string.h>
 #include <boost/algorithm/string.hpp>
-#include <cppconn/prepared_statement.h>
 #include "headers/logging/Logger.h"
  
 DAOUsuario* DAOUsuario::m_This = NULL;
@@ -17,6 +16,33 @@ DAOUsuario* DAOUsuario::GetDAO()
 		m_This->InicializaMock();
 	}
 	return m_This;
+}
+
+std::string DAOUsuario::GetPerfil(uint16_t cod_user)
+{
+	sql::PreparedStatement  *prep_stmt;
+	sql::ResultSet *rs;
+	
+	prep_stmt = MySQLConnector::getManager()->getConnection()->prepareStatement("select perfil from usuario where idUsuario = ?");
+	prep_stmt->setInt(1, cod_user);
+	rs = prep_stmt->executeQuery();
+	
+	if (rs->first())
+	{
+		std::string user_perfil = rs->getString("perfil");
+		
+		delete prep_stmt;
+		delete rs;
+		
+		return user_perfil;
+	}
+	else
+	{
+		delete prep_stmt;
+		delete rs;
+		
+		return NULL;
+	}
 }
 
 Usuario* DAOUsuario::Login(std::string login, std::string passwd)
@@ -41,6 +67,9 @@ Usuario* DAOUsuario::Login(std::string login, std::string passwd)
 			Usuario* usr = new Usuario();
 			usr->codigo = rs->getInt("idUsuario");
 			//usr->login = rs->getString("login");
+			
+			delete prep_stmt;
+			delete rs;
 			return usr;	
 		}
 		else
@@ -50,6 +79,8 @@ Usuario* DAOUsuario::Login(std::string login, std::string passwd)
 	}
 	CLogger::GetLogger()->Log("User %s not found", login.c_str());
 	
+	delete prep_stmt;
+	delete rs;
 	return NULL;
 }
 

@@ -2,6 +2,7 @@
 
 #include "headers/networking/Server.h"
 
+#include "headers/controls/UsuarioComodoControl.h"
 #include "headers/controls/UsuarioControl.h"
 #include "headers/controls/SensorControl.h"
 #include "headers/controls/ComodoControl.h"
@@ -17,6 +18,9 @@
 #include <thread>
 
 using namespace rapidjson;
+
+
+
 
 WebRouter::WebRouter()
 {
@@ -35,6 +39,7 @@ void WebRouter::start_app()
 	RegisterUsuariosRoute();
 	RegisterComodosRoute();
 	RegisterSensorPorComodoRoute();
+	RegisterComodosDisponiveisRoute();
 	
 	app.port(WEB_ROUTER_PORT).multithreaded().run();
 }
@@ -124,6 +129,18 @@ void WebRouter::RegisterLogin()
 	([&](const crow::request& req, crow::response& response_) 
 	{
 		response_ = UsuarioControl::GetControl()->Login(&req, &response_);
+		CLogger::GetLogger()->Log("Response Code %d", response_.code);
+		WebRouter::SignResponse(&response_);
+	});
+}
+
+void WebRouter::RegisterComodosDisponiveisRoute()
+{
+	CROW_ROUTE(app, "/comodosDisponiveis")
+	.methods("POST"_method)
+	([&](const crow::request& req, crow::response& response_) 
+	{
+		response_ = UsuarioComodoControl::GetControl()->ListarComodosAcessiveis(&req, &response_);
 		CLogger::GetLogger()->Log("Response Code %d", response_.code);
 		WebRouter::SignResponse(&response_);
 	});

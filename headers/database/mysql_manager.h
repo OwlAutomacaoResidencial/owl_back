@@ -5,6 +5,7 @@
 #include <cppconn/connection.h>
 #include <cppconn/resultset.h>
 #include <cppconn/statement.h>
+#include <cppconn/prepared_statement.h>
 
 #define MYSQL_HOST "tcp://127.0.0.1:3306"
 #define MYSQL_USERNAME "owl"

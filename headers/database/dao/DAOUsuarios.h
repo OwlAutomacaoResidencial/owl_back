@@ -22,6 +22,7 @@ class DAOUsuario
 public:
 	static DAOUsuario* GetDAO();
 	Usuario* Login(std::string login, std::string passwd);
+	std::string GetPerfil(uint16_t cod_user);
 	std::vector<Usuario*> GetUsuarios();
 private:
 	static DAOUsuario* m_This;

@@ -11,6 +11,7 @@
     </VirtualDirectory>
     <File Name="headers/Utilities.h"/>
     <VirtualDirectory Name="usuarios">
+      <File Name="headers/usuarios/usuarioComodo.h"/>
       <File Name="headers/usuarios/usuario.h"/>
     </VirtualDirectory>
     <VirtualDirectory Name="sensores">
@@ -49,6 +50,7 @@
       <File Name="headers/database/datasheet.h"/>
     </VirtualDirectory>
     <VirtualDirectory Name="controls">
+      <File Name="headers/controls/UsuarioComodoControl.h"/>
       <File Name="headers/controls/UsuarioControl.h"/>
       <File Name="headers/controls/SensorControl.h"/>
       <File Name="headers/controls/ComodoControl.h"/>
@@ -92,6 +94,7 @@
       </VirtualDirectory>
     </VirtualDirectory>
     <VirtualDirectory Name="controls">
+      <File Name="source/controls/UsuarioComodoControl.cpp"/>
       <File Name="source/controls/UsuarioControl.cpp"/>
       <File Name="source/controls/SensorControl.cpp"/>
       <File Name="source/controls/ComodoControl.cpp"/>
@@ -112,6 +115,7 @@
       <Compiler Options="-g;-O0;-Wall" C_Options="-g;-O0;-Wall" Assembler="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" PCHFlags="" PCHFlagsPolicy="0">
         <IncludePath Value="."/>
         <IncludePath Value="include/"/>
+        <IncludePath Value="/home/lucas/Downloads/openssl-1.0.2c/openssl-1.0.2c/include"/>
       </Compiler>
       <Linker Options="-lboost_system -pthread -lboost_thread -lmysqlcppconn" Required="yes">
         <LibraryPath Value="lib/boost/"/>
