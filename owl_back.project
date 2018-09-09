@@ -6,6 +6,9 @@
     </Plugin>
   </Plugins>
   <VirtualDirectory Name="headers">
+    <VirtualDirectory Name="enc">
+      <File Name="headers/enc/md5.h"/>
+    </VirtualDirectory>
     <File Name="headers/Utilities.h"/>
     <VirtualDirectory Name="usuarios">
       <File Name="headers/usuarios/usuario.h"/>
@@ -57,6 +60,9 @@
   <Description/>
   <Dependencies/>
   <VirtualDirectory Name="source">
+    <VirtualDirectory Name="enc">
+      <File Name="source/enc/md5.cpp"/>
+    </VirtualDirectory>
     <VirtualDirectory Name="networking">
       <File Name="source/networking/Server.cpp"/>
       <File Name="source/networking/SensorManager.cpp"/>

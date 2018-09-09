@@ -48,7 +48,7 @@ void WebRouter::Start()
 void WebRouter::SignResponse(crow::response* response_)
 {
 	response_->set_header("Content-Type", "application/json");
-	response_->set_header("Server", "HomeOn/0.1 (Crow)");
+	response_->set_header("Server", "HomeOn/0.2 (Crow)");
 	response_->end();
 }
 
@@ -123,7 +123,8 @@ void WebRouter::RegisterLogin()
 	.methods("POST"_method)
 	([&](const crow::request& req, crow::response& response_) 
 	{
-		UsuarioControl::GetControl()->Login(&req, &response_);
+		response_ = UsuarioControl::GetControl()->Login(&req, &response_);
+		CLogger::GetLogger()->Log("Response Code %d", response_.code);
 		WebRouter::SignResponse(&response_);
 	});
 }

@@ -16,11 +16,14 @@ void UsuarioSerializer::serialize(json::Writer<json::StringBuffer>* writer, Usua
 	writer->Key("codigo");
 	writer->Uint(usr->codigo);
 	writer->Key("login");
-	writer->String(usr->login.c_str());
+	writer->String(usr->login.c_str());	
+	
 	writer->Key("nome");
-	writer->String(usr->nome.c_str());
+	writer->String(usr->nome.c_str());	
+	
 	writer->Key("perfil");
 	writer->String(usr->perfil.c_str());
+	
 	writer->EndObject();
 }
 

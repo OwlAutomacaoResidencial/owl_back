@@ -12,7 +12,7 @@ class UsuarioControl
 {
 public:
 	static UsuarioControl* GetControl();
-	void Login(const crow::request* request_, crow::response* response_);
+	crow::response Login(const crow::request* request_, crow::response* response_);
 	void ListarTodos(crow::response* response_);
 private:
 	static UsuarioControl* m_This;

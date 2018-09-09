@@ -17,5 +17,7 @@ MySQLConnector *MySQLConnector::getManager()
 
 sql::Connection *MySQLConnector::getConnection()
 {
-	return driver->connect(MYSQL_HOST, MYSQL_USERNAME, MYSQL_PASSWORD);
+	sql::Connection* conn = driver->connect(MYSQL_HOST, MYSQL_USERNAME, MYSQL_PASSWORD);
+	conn->setSchema(MYSQL_SCHEMA);
+	return conn;
 }

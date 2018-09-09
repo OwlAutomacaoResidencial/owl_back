@@ -56,6 +56,7 @@ set(CMAKE_LDFLAGS "${CMAKE_LDFLAGS} -Llib/boost/ -L. ")
 
 # Define the CXX sources
 set ( CXX_SRCS
+    ${CMAKE_CURRENT_LIST_DIR}/source/enc/md5.cpp
     ${CMAKE_CURRENT_LIST_DIR}/source/database/dao/DAOSensores.cpp
     ${CMAKE_CURRENT_LIST_DIR}/source/json/serializer/SensorSerializer.cpp
     ${CMAKE_CURRENT_LIST_DIR}/source/json/serializer/UsuarioSerializer.cpp

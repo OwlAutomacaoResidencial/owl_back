@@ -1,7 +1,10 @@
 #include "headers/database/dao/DAOUsuarios.h"
+#include "headers/database/mysql_manager.h"
 
 #include <string.h>
 #include <boost/algorithm/string.hpp>
+#include <cppconn/prepared_statement.h>
+#include "headers/logging/Logger.h"
  
 DAOUsuario* DAOUsuario::m_This = NULL;
 std::vector<Usuario*> DAOUsuario::mockUsuarios;
@@ -18,13 +21,34 @@ DAOUsuario* DAOUsuario::GetDAO()
 
 Usuario* DAOUsuario::Login(std::string login, std::string passwd)
 {
-	for(auto const& usuario: mockUsuarios)
+	sql::PreparedStatement  *prep_stmt;
+	sql::ResultSet *rs;
+	
+	CLogger::GetLogger()->Log("Trying to login with %s", login.c_str());
+	
+	prep_stmt = MySQLConnector::getManager()->getConnection()->prepareStatement("select * from usuario where email = ?");
+	prep_stmt->setString(1, login);
+	rs = prep_stmt->executeQuery();
+	
+	if (rs->first()) 
 	{
-		Usuario* usr = (Usuario*) usuario;
+		std::string password = rs->getString("senha");
 		
-		if(boost::iequals(usr->login, login) && boost::iequals(usr->senha, passwd))
-			return usr;
+		if (password.compare(passwd) == 0)
+		{
+			CLogger::GetLogger()->Log("Found user %s, returning", login.c_str());
+			//Usuario* usr = static_cast<Usuario*>(malloc(sizeof(Usuario)));
+			Usuario* usr = new Usuario();
+			usr->codigo = rs->getInt("idUsuario");
+			//usr->login = rs->getString("login");
+			return usr;	
+		}
+		else
+		{
+			CLogger::GetLogger()->Log("Found user %s, invalid password", login.c_str());
+		}
 	}
+	CLogger::GetLogger()->Log("User %s not found", login.c_str());
 	
 	return NULL;
 }

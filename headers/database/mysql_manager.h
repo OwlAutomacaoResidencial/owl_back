@@ -6,9 +6,10 @@
 #include <cppconn/resultset.h>
 #include <cppconn/statement.h>
 
-#define MYSQL_HOST "tcp://192.168.0.107:3306"
-#define MYSQL_USERNAME "homeon"
-#define MYSQL_PASSWORD "homeon123"
+#define MYSQL_HOST "tcp://127.0.0.1:3306"
+#define MYSQL_USERNAME "owl"
+#define MYSQL_PASSWORD "owl"
+#define MYSQL_SCHEMA "owl"
 
 class MySQLConnector
 {

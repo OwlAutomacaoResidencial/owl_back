@@ -1,6 +1,8 @@
 #include "../../headers/controls/UsuarioControl.h"
 #include "../../headers/database/dao/DAOUsuarios.h"
 
+#include "headers/logging/Logger.h"
+
 #include "headers/json/serializer/UsuarioSerializer.h"
 
 UsuarioControl* UsuarioControl::m_This = NULL;
@@ -22,33 +24,34 @@ void UsuarioControl::ListarTodos(crow::response* response_)
 	response_->write(buffer.GetString());
 }
 
-void UsuarioControl::Login(const crow::request* req, crow::response* response_)
+crow::response UsuarioControl::Login(const crow::request* req, crow::response* response_)
 {
-		auto x = crow::json::load(req->body);
+	auto x = crow::json::load(req->body);
+	
+	if (!x)
+	{
+		return crow::response(401);
+	}
 		
-		if (!x)
-		{
-			crow::response auth_fail = crow::response(401);
-			response_ = &auth_fail;
-			return;
-		}
-			
-		std::string login = x["login"].s();
-		std::string passwd = x["passwd"].s();
-		
-		Usuario* usr = DAOUsuario::GetDAO()->Login(login, passwd);
-		
-		if(usr == NULL)
-		{
-			crow::response auth_fail = crow::response(401);
-			response_ = &auth_fail;
-			return;
-		}
-		
-		json::StringBuffer buffer;
-		json::Writer<json::StringBuffer> writer(buffer);
-		
-		UsuarioSerializer::GetSerializer()->serialize(&writer, usr);
-		
-		response_->write(buffer.GetString());
+	std::string login = x["login"].s();
+	std::string passwd = x["passwd"].s();
+	
+	Usuario* usr = DAOUsuario::GetDAO()->Login(login, passwd);
+	
+	if(usr == NULL)
+	{
+		return crow::response(401);
+	}
+	
+	CLogger::GetLogger()->Log("Login accepted.");
+	
+	json::StringBuffer buffer;
+	json::Writer<json::StringBuffer> writer(buffer);
+	
+	crow::response user_response = crow::response(200);
+	
+	UsuarioSerializer::GetSerializer()->serialize(&writer, usr);
+	user_response.write(buffer.GetString());
+	
+	return user_response;
 }
