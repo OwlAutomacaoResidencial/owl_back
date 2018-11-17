@@ -1,7 +1,6 @@
 #include "headers/database/dao/DAOUsuarios.h"
 #include "headers/database/mysql_manager.h"
 
-#include <string.h>
 #include <boost/algorithm/string.hpp>
 #include "headers/logging/Logger.h"
  
@@ -66,7 +65,10 @@ Usuario* DAOUsuario::Login(std::string login, std::string passwd)
 			//Usuario* usr = static_cast<Usuario*>(malloc(sizeof(Usuario)));
 			Usuario* usr = new Usuario();
 			usr->codigo = rs->getInt("idUsuario");
-			//usr->login = rs->getString("login");
+			usr->login = rs->getString("login");
+			usr->email = rs->getString("email");
+			usr->nome = rs->getString("nome");
+			usr->perfil = rs->getString("perfil");
 			
 			delete prep_stmt;
 			delete rs;
@@ -82,6 +84,34 @@ Usuario* DAOUsuario::Login(std::string login, std::string passwd)
 	delete prep_stmt;
 	delete rs;
 	return NULL;
+}
+
+Usuario* DAOUsuario::Register(Usuario* user) 
+{
+	sql::PreparedStatement  *prep_stmt;
+	
+	CLogger::GetLogger()->Log("Trying to register %s", user->email.c_str());
+	
+	std::stringstream query;
+	query << "INSERT INTO usuario (login, senha, perfil, nome, cpf, rg, dataNascimento, email) VALUES ";
+	query << "(?,?,?,?,?,?,?,?);";
+	
+	prep_stmt = MySQLConnector::getManager()->getConnection()->
+	prepareStatement(query.str());
+	prep_stmt->setString(1, user->email);
+	prep_stmt->setString(2, user->senha);
+	prep_stmt->setString(3, user->perfil);
+	prep_stmt->setString(4, user->nome);
+	prep_stmt->setString(5, "");
+	prep_stmt->setString(6, "");
+	prep_stmt->setString(7, "");
+	prep_stmt->setString(8, user->email);
+	prep_stmt->executeUpdate();
+	
+	CLogger::GetLogger()->Log("User %s registred", user->email.c_str());
+	
+	delete prep_stmt;
+	return Login(user->email, user->senha);
 }
 
 std::vector<Usuario*> DAOUsuario::GetUsuarios()

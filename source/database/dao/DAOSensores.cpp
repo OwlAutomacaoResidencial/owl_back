@@ -1,87 +1,82 @@
 #include "headers/database/dao/DAOSensores.h"
 
+static void inicializaTipoSensores() 
+{
+	tipo_sensores.push_back(new t_sensor
+	{
+		.codigo = 1,
+		.descricao = "Teste"
+	});
+}
+
 DAOSensores* DAOSensores::m_This = NULL;
-std::vector<Sensor*> DAOSensores::mockSensor;
 
 DAOSensores* DAOSensores::GetDAO()
 {
 	if(m_This == NULL)
 	{
-		m_This = new DAOSensores();	
-		m_This->InicializaMock();
+		m_This = new DAOSensores();
+		inicializaTipoSensores();
 	}
 	return m_This;
 }
 
-sql::ResultSet* GetAllSensores(sql::Connection *con)
+t_sensor* DAOSensores::getTipoSensor(int tipo)
 {
-	sql::Statement *stmt;
-	sql::ResultSet *res;
-	
-	con->setSchema("homeon");
-
-	stmt = con->createStatement();
-	res = stmt->executeQuery("SELECT * FROM SENSOR");
-	
-	return res;
+	for(auto const& tipoSensor: tipo_sensores)
+	{
+		t_sensor* t = (t_sensor*) tipoSensor;
+		if(t->codigo == tipo)
+		{
+			return t;
+		}
+	}
+	return NULL;
 }
 
-std::vector<sensor*> DAOSensores::GetSensorPorComodo(uint16_t codigoComodo)
+const std::vector<sensor*> DAOSensores::GetSensorPorComodo(uint16_t codigoComodo)
 {
 	std::vector<sensor*> listaRetorno;
 	std::vector<sensor*>::iterator it;
 	
 	it = listaRetorno.begin();
 	
-	for(auto const& sensor: mockSensor)
+	/*for(auto const& sensor: mockSensor)
 	{
 		Sensor* sensr = (Sensor*) sensor;
 		
 		if(sensr->codigoComodo == codigoComodo)
 			it = listaRetorno.insert(it, sensr);
-	}
+	}*/
 
 	return listaRetorno;
 }
 
-std::vector<Sensor*> DAOSensores::GetSensores()
+const std::vector<Sensor*> DAOSensores::GetSensores()
 {
-	return mockSensor;
-}
+	std::vector<Sensor*> retorno;
+	std::vector<sensor*>::iterator it;
+	
+	it = retorno.begin();
+	
+	sql::PreparedStatement  *prep_stmt;
+	sql::ResultSet *rs;
+	
+	prep_stmt = MySQLConnector::getManager()->getConnection()->prepareStatement("select * from sensor");
+	rs = prep_stmt->executeQuery();
+	
+	while(rs->next()) 
+	{
+		Sensor* sensor_ = new Sensor();
+		sensor_->codigo = rs->getInt("idSensor");
+		sensor_->nome = rs->getString("nomeSensor");
+		sensor_->tipo = getTipoSensor(rs->getInt("tipo"));
 
-void DAOSensores::InicializaMock()
-{
-	TipoSensor* tipoSensorLampada = new TipoSensor;
-	tipoSensorLampada->codigo = 1;
-	tipoSensorLampada->descricao = "Lâmpada";
+		it = retorno.insert(it, sensor_);
+	}
 	
-	mockSensor.push_back(new Sensor
-	{
-		.codigo = 43775,
-		.nome = "Luz da TV",
-		.codigoComodo = 1,
-		.ip = "192.168.0.10",
-		.tipo = tipoSensorLampada,
-		.index = 1
-	});
+	delete prep_stmt;
+	delete rs;
 	
-	mockSensor.push_back(new Sensor
-	{
-		.codigo = 43775,
-		.nome = "Luz do Sofá",
-		.codigoComodo = 1,
-		.ip = "192.168.0.11",
-		.tipo = tipoSensorLampada,
-		.index = 2
-	});
-	
-	mockSensor.push_back(new Sensor
-	{
-		.codigo = 43775,
-		.nome = "Luz da Cozinha",
-		.codigoComodo = 2,
-		.ip = "192.168.0.12",
-		.tipo = tipoSensorLampada,
-		.index = 3
-	});
+	return retorno;
 }

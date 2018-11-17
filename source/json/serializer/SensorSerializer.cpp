@@ -11,7 +11,7 @@ SensorSerializer* SensorSerializer::GetSerializer()
 	return m_This;
 }
 
-void SensorSerializer::serializeSensor(json::PrettyWriter<json::StringBuffer>* writer, sql::ResultSet* rs)
+void SensorSerializer::serializeSensor(rapidjson::PrettyWriter<rapidjson::StringBuffer>* writer, sql::ResultSet* rs)
 {
 	writer->StartObject();
 	writer->Key("idSensor");
@@ -23,7 +23,7 @@ void SensorSerializer::serializeSensor(json::PrettyWriter<json::StringBuffer>* w
 	writer->EndObject();
 }
 
-void SensorSerializer::serializeSensor(json::PrettyWriter<json::StringBuffer>* writer, Sensor* sen)
+void SensorSerializer::serializeSensor(rapidjson::PrettyWriter<rapidjson::StringBuffer>* writer, Sensor* sen)
 {
 	if(sen == 0x00 || sen == NULL)
 		return;
@@ -61,7 +61,7 @@ void SensorSerializer::serializeSensor(json::PrettyWriter<json::StringBuffer>* w
 	writer->EndObject();
 }
 
-void SensorSerializer::serializeSensorList(json::PrettyWriter<json::StringBuffer>* writer, sql::ResultSet* rs)
+void SensorSerializer::serializeSensorList(rapidjson::PrettyWriter<rapidjson::StringBuffer>* writer, sql::ResultSet* rs)
 {
 	writer->StartArray();
 	
@@ -71,7 +71,7 @@ void SensorSerializer::serializeSensorList(json::PrettyWriter<json::StringBuffer
 	writer->EndArray();
 }
 
-void SensorSerializer::serializeSensorList(json::PrettyWriter<json::StringBuffer>* writer, std::vector<Sensor*> sensores)
+void SensorSerializer::serializeSensorList(rapidjson::PrettyWriter<rapidjson::StringBuffer>* writer, std::vector<Sensor*> sensores)
 {
 	writer->StartArray();
 	

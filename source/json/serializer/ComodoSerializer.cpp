@@ -10,7 +10,7 @@ ComodoSerializer* ComodoSerializer::GetSerializer()
 	return m_This;
 }
 
-void ComodoSerializer::serializeComodo(json::Writer<json::StringBuffer>* writer, Comodo* com)
+void ComodoSerializer::serializeComodo(rapidjson::Writer<rapidjson::StringBuffer>* writer, Comodo* com)
 {
 	writer->StartObject();
 	writer->Key("idComodo");
@@ -24,7 +24,7 @@ void ComodoSerializer::serializeComodo(json::Writer<json::StringBuffer>* writer,
 	writer->EndObject();
 }
 
-void ComodoSerializer::serializeComodoList(json::Writer<json::StringBuffer>* writer, std::vector<Comodo*> comodos)
+void ComodoSerializer::serializeComodoList(rapidjson::Writer<rapidjson::StringBuffer>* writer, std::vector<Comodo*> comodos)
 {
 	writer->StartArray();
 	
@@ -32,4 +32,33 @@ void ComodoSerializer::serializeComodoList(json::Writer<json::StringBuffer>* wri
 		serializeComodo(writer, (Comodo*) comodo);
 		
 	writer->EndArray();
+}
+
+Comodo* ComodoSerializer::parse(const std::string json)
+{
+	rapidjson::Document document;
+	document.Parse(json.c_str());
+	
+	CLogger::GetLogger()->Log(json.c_str());
+	
+	Comodo* comodo = new Comodo();
+	
+	if(document.HasMember("nome"))
+	{
+		comodo->nome = document["nome"].GetString();
+	}
+	
+	if(document.HasMember("tipo"))
+	{
+		comodo->tipo = document["tipo"].GetInt();
+	}
+	
+	if(document.HasMember("externo"))
+	{
+		comodo->externo = document["externo"].GetInt();
+	}
+	
+	CLogger::GetLogger()->Log(comodo->nome.c_str());
+	
+	return comodo;
 }

@@ -17,6 +17,12 @@
 using namespace rapidjson;
 using namespace std;
 
+void segfault_sigaction(int signal, siginfo_t *si, void *arg)
+{
+    printf("Caught segfault at address %p\n", si->si_addr);
+    exit(0);
+}
+
 //namespace json = rapidjson;
 
 /*void start_web()
@@ -82,8 +88,17 @@ using namespace std;
 int main()
 {
 	bool running = true;
+	
+	struct sigaction sa;
 
-	CLogger::GetLogger()->Log("HomeOn.Central Bootstrap is initializing");
+    memset(&sa, 0, sizeof(struct sigaction));
+    sigemptyset(&sa.sa_mask);
+    sa.sa_sigaction = segfault_sigaction;
+    sa.sa_flags   = SA_SIGINFO;
+
+    sigaction(SIGSEGV, &sa, NULL);
+
+	CLogger::GetLogger()->Log("OWL Central is initializing");
 
 	boost::asio::io_service srv;
 	boost::asio::ip::tcp::endpoint endpoint(boost::asio::ip::tcp::v4(), (unsigned int) CORESERVER_TCP_PORT);

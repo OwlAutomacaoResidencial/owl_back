@@ -2,8 +2,16 @@
 #define WEB_ROUTER
 
 #include "crow.h"
+#include "crow/common.h"
 #include "headers/logging/Logger.h"
-#include "jwt/jwt.hpp"
+
+#include "rapidjson/document.h"
+
+#include "headers/mweb/MWebSession.h"
+
+#include "stdio.h"
+
+using namespace crow;
 
 #define WEB_ROUTER_PORT 18080
 
@@ -24,23 +32,24 @@ struct OwlMiddleware
     struct context
     {
     };
-
-    void before_handle(crow::request& req, crow::response& /*res*/, context& ctx)
+ 
+	void before_handle(crow::request& req, crow::response& res, context& /*ctx*/)
     {
-        std::string authorization = req.get_header_value("Authorization");
-		using namespace jwt::params;
-
-		  auto key = "secret"; //Secret to use for the algorithm
-		  //Create JWT object
-		  jwt::jwt_object obj{algorithm("HS256"), payload({{"some", "payload"}}), secret(key)};
-
-		  //Get the encoded string/assertion
-		  auto enc_str = obj.signature();
-		  CLogger::GetLogger()->Log("%s", enc_str);
-		if (authorization.compare("zanao@demitido") != 0)
-		{
-			
+		switch(req.method) {
+			case HTTPMethod::Options:
+				res = crow::response(202);
+				res.add_header("Access-Control-Allow-Origin", "*");
+				res.add_header("Access-Control-Allow-Methods", "POST, GET, DELETE, PUT, OPTIONS");
+				res.add_header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+				res.end();
+			break;
+			default:
+				res.add_header("Access-Control-Allow-Origin", "*");
+				res.add_header("Access-Control-Allow-Methods", "POST, GET, DELETE, PUT, OPTIONS");
+				res.add_header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+			break;
 		}
+		
     }
 
     void after_handle(crow::request& /*req*/, crow::response& /*res*/, context& /*ctx*/)
@@ -65,6 +74,18 @@ private:
 	void RegisterUsuariosRoute();
 	void RegisterComodosDisponiveisRoute();
 	void RegisterSensorPorComodoRoute();
+	
+	void RegisterUsuarioRegister();
+	
+	void RegisterComodoCreate();
+	void RegisterComodoDelete();
+	
+	void registerUsuarioComodoCreate();
+	void registerUsuarioComodoDelete();
+	
+	void registerUsuarioSensorCreate();
+	void registerUsuarioSensorDelete();
+	
 	void SignResponse(crow::response* response_);
 public:
 	WebRouter();

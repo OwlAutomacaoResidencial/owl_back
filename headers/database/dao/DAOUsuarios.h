@@ -4,6 +4,8 @@
 #include "headers/database/mysql_manager.h"
 #include "headers/usuarios/usuario.h"
 
+#include <sstream>
+#include <string>
 #include <vector>
 
 static Usuario* m_Usuarios[1] = {
@@ -22,6 +24,7 @@ class DAOUsuario
 public:
 	static DAOUsuario* GetDAO();
 	Usuario* Login(std::string login, std::string passwd);
+	Usuario* Register(Usuario* user);
 	std::string GetPerfil(uint16_t cod_user);
 	std::vector<Usuario*> GetUsuarios();
 private:

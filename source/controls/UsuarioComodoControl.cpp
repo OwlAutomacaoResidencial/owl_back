@@ -2,6 +2,8 @@
 
 #include "headers/database/dao/DAOComodos.h"
 #include "headers/database/dao/DAOUsuarios.h"
+#include "headers/database/dao/DAOUsuarioComodo.h"
+
 #include "headers/json/serializer/ComodoSerializer.h"
 
 #include "headers/logging/Logger.h"
@@ -52,4 +54,18 @@ crow::response UsuarioComodoControl::ListarComodosAcessiveis(const crow::request
 	user_response.write(buffer.GetString());
 	
 	return user_response;
+}
+
+crow::response UsuarioComodoControl::create(int idUsuario, int idComodo)
+{
+	DAOUsuarioComodo::getDAO()->create(idUsuario, idComodo);
+	
+	return crow::response(200);
+}
+
+crow::response UsuarioComodoControl::del(int idUsuario, int idComodo)
+{
+	DAOUsuarioComodo::getDAO()->del(idUsuario, idComodo);
+	
+	return crow::response(200);
 }

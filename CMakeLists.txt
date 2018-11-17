@@ -32,9 +32,7 @@ set(WORKSPACE_PATH "${CMAKE_CURRENT_LIST_DIR}/..")
 
 include_directories(
     .
-    .
     include/
-    /home/lucas/Downloads/openssl-1.0.2c/openssl-1.0.2c/include
 
 )
 
@@ -45,7 +43,7 @@ add_definitions(-O0)
 add_definitions(-Wall)
 
 # Linker options
-set(LINK_OPTIONS -lboost_system -pthread -lboost_thread -lmysqlcppconn)
+set(LINK_OPTIONS -lboost_system -pthread -lboost_thread -lmysqlcppconn -lssl -lcrypto)
 
 
 if(WIN32)
@@ -53,30 +51,38 @@ if(WIN32)
 endif(WIN32)
 
 # Library path
-set(CMAKE_LDFLAGS "${CMAKE_LDFLAGS} -Llib/boost/ -L. ")
+set(CMAKE_LDFLAGS "${CMAKE_LDFLAGS} -Llib/boost/ -Llib/ckjwt/ -L. ")
 
 # Define the CXX sources
 set ( CXX_SRCS
-    ${CMAKE_CURRENT_LIST_DIR}/source/networking/SensorManager.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/source/networking/Server.cpp
     ${CMAKE_CURRENT_LIST_DIR}/source/database/dao/DAOComodos.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/source/database/dao/DAOUsuarios.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/source/database/dao/DAOUsuarioComodo.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/source/database/dao/DAOUsuarioSensor.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/source/json/serializer/SensorSerializer.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/source/json/serializer/UsuarioSerializer.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/source/database/dao/DAOSensores.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/source/mweb/UsuarioWebRouter.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/source/networking/ClientManager.cpp
     ${CMAKE_CURRENT_LIST_DIR}/source/controls/UsuarioComodoControl.cpp
     ${CMAKE_CURRENT_LIST_DIR}/source/networking/Client.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/source/main.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/source/mweb/UsuarioSensorWebRouter.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/source/json/MWebSessionSerializer.cpp
     ${CMAKE_CURRENT_LIST_DIR}/source/controls/SensorControl.cpp
     ${CMAKE_CURRENT_LIST_DIR}/source/controls/UsuarioControl.cpp
     ${CMAKE_CURRENT_LIST_DIR}/source/logging/Logger.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/source/networking/ClientManager.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/source/database/dao/DAOUsuarios.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/source/enc/md5.cpp
     ${CMAKE_CURRENT_LIST_DIR}/source/json/serializer/ComodoSerializer.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/source/main.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/source/networking/Server.cpp
     ${CMAKE_CURRENT_LIST_DIR}/source/database/datasheet.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/source/networking/SensorManager.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/source/mweb/UsuarioComodoWebRouter.cpp
     ${CMAKE_CURRENT_LIST_DIR}/source/mweb/WebRouter.cpp
     ${CMAKE_CURRENT_LIST_DIR}/source/database/mysql_manager.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/source/controls/SessionControl.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/source/controls/UsuarioSensorControl.cpp
     ${CMAKE_CURRENT_LIST_DIR}/source/controls/ComodoControl.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/source/json/serializer/UsuarioSerializer.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/source/json/serializer/SensorSerializer.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/source/database/dao/DAOSensores.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/source/enc/md5.cpp
 )
 
 set_source_files_properties(

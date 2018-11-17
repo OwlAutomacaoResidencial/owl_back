@@ -27,6 +27,7 @@ SOFTWARE.
 #include <cassert>
 #include <cstring>
 #include <ostream>
+#include "jwt/config.hpp"
 #include "jwt/string_view.hpp"
 
 namespace jwt {
@@ -61,8 +62,7 @@ public:
 public:
   constexpr char at(size_t pos) const noexcept
   {
-    assert (pos < chars_.size());
-    return chars_.at(pos);
+    return X_ASSERT(pos < chars_.size()), chars_.at(pos);
   }
 
 private:
@@ -155,8 +155,7 @@ public:
 public:
   constexpr char at(size_t pos) const noexcept
   {
-    assert (pos < map_.size());
-    return map_[pos];
+    return X_ASSERT(pos < map_.size()), map_[pos];
   }
 
 private:
@@ -201,7 +200,7 @@ inline std::string base64_decode(const char* in, size_t len)
 
   constexpr static const DMap dmap{};
 
-  while (dmap.at(in[bytes_rem - 1]) == -1) { bytes_rem--; }
+  while (bytes_rem > 0 && dmap.at(in[bytes_rem - 1]) == -1) { bytes_rem--; }
 
   while (bytes_rem > 4)
   {

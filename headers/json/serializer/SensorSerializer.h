@@ -16,16 +16,14 @@
 
 #include <vector>
 
-namespace json = rapidjson;
-
 class SensorSerializer
 {
 public:
 	static SensorSerializer* GetSerializer();
-	void serializeSensor(json::PrettyWriter<json::StringBuffer>* writer, sql::ResultSet* rs);
-	void serializeSensor(json::PrettyWriter<json::StringBuffer>* writer, Sensor* sen);
-	void serializeSensorList(json::PrettyWriter<json::StringBuffer>* writer, sql::ResultSet* rs);
-	void serializeSensorList(json::PrettyWriter<json::StringBuffer>* writer, std::vector<Sensor*> sensores);
+	void serializeSensor(rapidjson::PrettyWriter<rapidjson::StringBuffer>* writer, sql::ResultSet* rs);
+	void serializeSensor(rapidjson::PrettyWriter<rapidjson::StringBuffer>* writer, Sensor* sen);
+	void serializeSensorList(rapidjson::PrettyWriter<rapidjson::StringBuffer>* writer, sql::ResultSet* rs);
+	void serializeSensorList(rapidjson::PrettyWriter<rapidjson::StringBuffer>* writer, std::vector<Sensor*> sensores);
 private:
 	static SensorSerializer* m_This;
 };

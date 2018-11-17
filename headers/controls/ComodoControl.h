@@ -13,6 +13,9 @@ class ComodoControl
 public:
 	static ComodoControl* GetControl();
 	void ListarTodos(crow::response* response_);
+	
+	crow::response create(std::string json);
+	crow::response del(int idcomodo);
 private:
 	static ComodoControl* m_This;
 };

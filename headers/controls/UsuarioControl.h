@@ -3,6 +3,7 @@
 
 #include "crow.h"
 #include "rapidjson/prettywriter.h"
+#include "headers/usuarios/usuario.h"
 
 using namespace rapidjson;
 
@@ -12,7 +13,8 @@ class UsuarioControl
 {
 public:
 	static UsuarioControl* GetControl();
-	crow::response Login(const crow::request* request_, crow::response* response_);
+	Usuario* Login(const std::string login, const std::string passwd);
+	crow::response Register(const std::string body);
 	void ListarTodos(crow::response* response_);
 private:
 	static UsuarioControl* m_This;

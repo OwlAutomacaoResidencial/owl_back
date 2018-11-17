@@ -96,6 +96,66 @@ std::vector<Comodo*> DAOComodo::GetComodos()
 	return result;
 }
 
+Comodo* DAOComodo::Create(Comodo* comodo)
+{
+	sql::Connection *conn = MySQLConnector::getManager()->getConnection();
+	sql::PreparedStatement  *prep_stmt;
+	
+	conn->setAutoCommit(false);
+	
+	CLogger::GetLogger()->Log("Trying to create comodo %s %d %d", comodo->nome.c_str(), comodo->tipo, comodo->externo);
+	
+	std::stringstream query;
+	query << "INSERT INTO comodo (nome, tipo, externo) VALUES ";
+	query << "(?,?,?);";
+	
+	try {
+		prep_stmt = conn->prepareStatement(query.str());
+		prep_stmt->setString(1, comodo->nome);
+		prep_stmt->setInt(2, comodo->tipo);
+		prep_stmt->setInt(3, (int) comodo->externo);
+		prep_stmt->executeUpdate();	
+		
+		comodo->codigo = MySQLConnector::getManager()->returnGeneratedId(conn);
+	}
+	catch(const std::exception& exc) {
+		cerr << exc.what();
+	}
+	
+	conn->commit();
+	
+	delete prep_stmt;
+	
+	return comodo;
+}
+
+
+void DAOComodo::del(int idcomodo)
+{
+	sql::Connection *conn = MySQLConnector::getManager()->getConnection();
+	sql::PreparedStatement  *prep_stmt;
+	
+	conn->setAutoCommit(false);
+	
+	CLogger::GetLogger()->Log("Trying to delete comodo %d", idcomodo);
+	
+	std::stringstream query;
+	query << "DELETE FROM comodo WHERE idcomodo = ? ";
+	
+	try {
+		prep_stmt = conn->prepareStatement(query.str());
+		prep_stmt->setInt(1, idcomodo);
+		prep_stmt->executeUpdate();
+	}
+	catch(const std::exception& exc) {
+		cerr << exc.what();
+	}
+	
+	conn->commit();
+	
+	delete prep_stmt;
+}
+
 void DAOComodo::InicializaMock()
 {
 	mockComodos.push_back(new Comodo

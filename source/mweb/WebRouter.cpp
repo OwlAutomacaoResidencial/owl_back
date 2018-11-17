@@ -3,7 +3,6 @@
 #include "headers/networking/Server.h"
 
 #include "headers/controls/UsuarioComodoControl.h"
-#include "headers/controls/UsuarioControl.h"
 #include "headers/controls/SensorControl.h"
 #include "headers/controls/ComodoControl.h"
 
@@ -41,6 +40,17 @@ void WebRouter::start_app()
 	RegisterSensorPorComodoRoute();
 	RegisterComodosDisponiveisRoute();
 	
+	RegisterUsuarioRegister();
+	
+	RegisterComodoCreate();
+	RegisterComodoDelete();
+	
+	registerUsuarioComodoCreate();
+	registerUsuarioComodoDelete();
+	
+	registerUsuarioSensorCreate();
+	registerUsuarioSensorDelete();
+	
 	app.port(WEB_ROUTER_PORT).multithreaded().run();
 }
 
@@ -54,6 +64,9 @@ void WebRouter::SignResponse(crow::response* response_)
 {
 	response_->set_header("Content-Type", "application/json");
 	response_->set_header("Server", "HomeOn/0.2 (Crow)");
+	response_->add_header("Access-Control-Allow-Origin", "*");
+	response_->add_header("Access-Control-Allow-Methods", "POST, GET, DELETE, PUT, OPTIONS");
+	response_->add_header("Access-Control-Allow-Headers", "Content-Type, Authorization");
 	response_->end();
 }
 
@@ -122,18 +135,6 @@ void WebRouter::RegisterSensorAction()
 	});
 }
 
-void WebRouter::RegisterLogin()
-{
-	CROW_ROUTE(app, "/login")
-	.methods("POST"_method)
-	([&](const crow::request& req, crow::response& response_) 
-	{
-		response_ = UsuarioControl::GetControl()->Login(&req, &response_);
-		CLogger::GetLogger()->Log("Response Code %d", response_.code);
-		WebRouter::SignResponse(&response_);
-	});
-}
-
 void WebRouter::RegisterComodosDisponiveisRoute()
 {
 	CROW_ROUTE(app, "/comodosDisponiveis")
@@ -177,16 +178,6 @@ void WebRouter::RegisterComodosRoute()
 	});
 }
 
-void WebRouter::RegisterUsuariosRoute()
-{
-	CROW_ROUTE(app, "/usuarios")
-    ([&](const crow::request&, crow::response& response_) 
-	{
-		UsuarioControl::GetControl()->ListarTodos(&response_);
-		WebRouter::SignResponse(&response_);
-	});
-}
-
 void WebRouter::RegisterSensorPorComodoRoute()
 {
 	CROW_ROUTE(app, "/sensor/comodo/<int>")
@@ -213,6 +204,32 @@ void WebRouter::RegisterLightSwitch()
 			response_ = crow::response(500);
 
 		
+		WebRouter::SignResponse(&response_);
+	});
+}
+
+void WebRouter::RegisterComodoCreate()
+{
+	CROW_ROUTE(app, "/comodo")
+	.methods("PUT"_method)
+	([&](const crow::request& req, crow::response& response_) 
+	{
+		response_ = ComodoControl::GetControl()->create(req.body);
+		
+		CLogger::GetLogger()->Log("Response Code %d", response_.code);
+		WebRouter::SignResponse(&response_);
+	});
+}
+
+void WebRouter::RegisterComodoDelete()
+{
+	CROW_ROUTE(app, "/comodo/<int>")
+	.methods("DELETE"_method)
+	([&](const crow::request& req, crow::response& response_, int idcomodo) 
+	{
+		response_ = ComodoControl::GetControl()->del(idcomodo);
+		
+		CLogger::GetLogger()->Log("Response Code %d", response_.code);
 		WebRouter::SignResponse(&response_);
 	});
 }

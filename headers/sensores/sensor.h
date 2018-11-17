@@ -2,12 +2,16 @@
 #define SENSOR
 
 #include <stdlib.h>
+#include <vector>
 
 typedef struct t_sensor
 {
 	uint16_t codigo;
 	std::string descricao;
 }TipoSensor;
+
+static std::vector<t_sensor*> tipo_sensores;
+static void inicializaTipoSensores();
 
 typedef struct sensor
 {

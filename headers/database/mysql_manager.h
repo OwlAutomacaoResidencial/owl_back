@@ -21,6 +21,7 @@ private:
 public:
 	static MySQLConnector *getManager();
 	sql::Connection *getConnection();
+	int returnGeneratedId(sql::Connection *conn);
 };
 
 
