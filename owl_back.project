@@ -6,6 +6,9 @@
     </Plugin>
   </Plugins>
   <VirtualDirectory Name="headers">
+    <VirtualDirectory Name="ocorrencias">
+      <File Name="headers/ocorrencias/ocorrencia.h"/>
+    </VirtualDirectory>
     <VirtualDirectory Name="enc">
       <File Name="headers/enc/md5.h"/>
     </VirtualDirectory>
@@ -37,6 +40,7 @@
     </VirtualDirectory>
     <VirtualDirectory Name="json">
       <VirtualDirectory Name="serializer">
+        <File Name="headers/json/serializer/OcorrenciaSerializer.h"/>
         <File Name="headers/json/serializer/MWebSessionSerializer.h"/>
         <File Name="headers/json/serializer/UsuarioSerializer.h"/>
         <File Name="headers/json/serializer/SensorSerializer.h"/>
@@ -45,6 +49,7 @@
     </VirtualDirectory>
     <VirtualDirectory Name="database">
       <VirtualDirectory Name="dao">
+        <File Name="headers/database/dao/DAOOcorrencias.h"/>
         <File Name="headers/database/dao/DAOUsuarioSensor.h"/>
         <File Name="headers/database/dao/DAOUsuarioComodo.h"/>
         <File Name="headers/database/dao/DAOUsuarios.h"/>
@@ -55,6 +60,7 @@
       <File Name="headers/database/datasheet.h"/>
     </VirtualDirectory>
     <VirtualDirectory Name="controls">
+      <File Name="headers/controls/OcorrenciasControl.h"/>
       <File Name="headers/controls/UsuarioSensorControl.hpp"/>
       <File Name="headers/controls/SessionControl.h"/>
       <File Name="headers/controls/UsuarioComodoControl.h"/>
@@ -89,6 +95,7 @@
     </VirtualDirectory>
     <VirtualDirectory Name="json">
       <VirtualDirectory Name="serialize">
+        <File Name="source/json/OcorrenciaSerializer.cpp"/>
         <File Name="source/json/MWebSessionSerializer.cpp"/>
         <File Name="source/json/serializer/UsuarioSerializer.cpp"/>
         <File Name="source/json/serializer/SensorSerializer.cpp"/>
@@ -99,6 +106,7 @@
       <File Name="source/database/mysql_manager.cpp"/>
       <File Name="source/database/datasheet.cpp"/>
       <VirtualDirectory Name="dao">
+        <File Name="source/database/dao/DAOOcorrencias.cpp"/>
         <File Name="source/database/dao/DAOUsuarioSensor.cpp"/>
         <File Name="source/database/dao/DAOUsuarioComodo.cpp"/>
         <File Name="source/database/dao/DAOUsuarios.cpp"/>
@@ -107,6 +115,7 @@
       </VirtualDirectory>
     </VirtualDirectory>
     <VirtualDirectory Name="controls">
+      <File Name="source/controls/OcorrenciaControl.cpp"/>
       <File Name="source/controls/UsuarioSensorControl.cpp"/>
       <File Name="source/controls/SessionControl.cpp"/>
       <File Name="source/controls/UsuarioComodoControl.cpp"/>

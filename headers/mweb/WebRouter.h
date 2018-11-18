@@ -44,17 +44,19 @@ struct OwlMiddleware
 				res.end();
 			break;
 			default:
-				res.add_header("Access-Control-Allow-Origin", "*");
-				res.add_header("Access-Control-Allow-Methods", "POST, GET, DELETE, PUT, OPTIONS");
-				res.add_header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+				
 			break;
 		}
 		
     }
 
-    void after_handle(crow::request& /*req*/, crow::response& /*res*/, context& /*ctx*/)
+    void after_handle(crow::request& /*req*/, crow::response& res, context& /*ctx*/)
     {
-        // no-op
+		res.set_header("Content-Type", "application/json");
+		res.set_header("Server", "HomeOn/0.2 (Crow)");
+		res.set_header("Access-Control-Allow-Origin", "*");
+		res.set_header("Access-Control-Allow-Methods", "POST, GET, DELETE, PUT, OPTIONS");
+		res.set_header("Access-Control-Allow-Headers", "Content-Type, Authorization");
     }
 };
 
@@ -85,6 +87,8 @@ private:
 	
 	void registerUsuarioSensorCreate();
 	void registerUsuarioSensorDelete();
+	
+	void registerOcorrencias();
 	
 	void SignResponse(crow::response* response_);
 public:

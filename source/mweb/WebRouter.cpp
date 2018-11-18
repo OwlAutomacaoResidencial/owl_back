@@ -5,6 +5,7 @@
 #include "headers/controls/UsuarioComodoControl.h"
 #include "headers/controls/SensorControl.h"
 #include "headers/controls/ComodoControl.h"
+#include "headers/controls/OcorrenciasControl.h"
 
 #include "rapidjson/prettywriter.h"
 
@@ -51,6 +52,8 @@ void WebRouter::start_app()
 	registerUsuarioSensorCreate();
 	registerUsuarioSensorDelete();
 	
+	registerOcorrencias();
+	
 	app.port(WEB_ROUTER_PORT).multithreaded().run();
 }
 
@@ -62,17 +65,14 @@ void WebRouter::Start()
 
 void WebRouter::SignResponse(crow::response* response_)
 {
-	response_->set_header("Content-Type", "application/json");
-	response_->set_header("Server", "HomeOn/0.2 (Crow)");
-	response_->add_header("Access-Control-Allow-Origin", "*");
-	response_->add_header("Access-Control-Allow-Methods", "POST, GET, DELETE, PUT, OPTIONS");
-	response_->add_header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+
 	response_->end();
 }
 
 void WebRouter::RegisterActualTemperature()
 {
 	CROW_ROUTE(app, "/temperaturaAtual")
+	.methods("GET"_method)
     ([&](const crow::request&, crow::response& response_) 
 	{
 		std::string result = "{\n	\"temperatura\":\"";
@@ -87,6 +87,7 @@ void WebRouter::RegisterActualTemperature()
 void WebRouter::RegisterActualHumidity()
 {
 	CROW_ROUTE(app, "/umidadeAtual")
+	.methods("GET"_method)
     ([&](const crow::request&, crow::response& response_) 
 	{
 		std::string result = "{\n	\"umidade\":\"";
@@ -101,6 +102,7 @@ void WebRouter::RegisterActualHumidity()
 void WebRouter::RegisterActualUSolo()
 {
 	CROW_ROUTE(app, "/umidadeSoloAtual")
+	.methods("GET"_method)
     ([&](const crow::request&, crow::response& response_) 
 	{
 		std::string result = "{\n	\"umidadeSolo\":\"";
@@ -151,18 +153,7 @@ void WebRouter::RegisterSensorRoute()
 {
 	CROW_ROUTE(app, "/sensores")
     ([&](const crow::request&, crow::response& response_) 
-	{
-		/*json::StringBuffer buffer;
-		json::Writer<json::StringBuffer> writer(buffer);
-		
-		sql::Connection* con = MySQLConnector::getManager()->getConnection();
-		sql::ResultSet* sensores = GetAllSensores(con);
-		
-		serializeList(&writer, sensores);
-		
-		delete con;
-		delete sensores;*/
-		
+	{	
 		SensorControl::GetControl()->ListarTodos(&response_);
 		WebRouter::SignResponse(&response_);
 	});
@@ -229,6 +220,18 @@ void WebRouter::RegisterComodoDelete()
 	{
 		response_ = ComodoControl::GetControl()->del(idcomodo);
 		
+		CLogger::GetLogger()->Log("Response Code %d", response_.code);
+		WebRouter::SignResponse(&response_);
+	});
+}
+
+void WebRouter::registerOcorrencias()
+{
+	CROW_ROUTE(app, "/ocorrencias")
+	.methods("GET"_method)
+	([&](const crow::request&, crow::response& response_) 
+	{
+		response_ = OcorrenciaControl::getControl()->listarTodos();
 		CLogger::GetLogger()->Log("Response Code %d", response_.code);
 		WebRouter::SignResponse(&response_);
 	});

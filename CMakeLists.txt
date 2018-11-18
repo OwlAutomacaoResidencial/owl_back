@@ -55,11 +55,14 @@ set(CMAKE_LDFLAGS "${CMAKE_LDFLAGS} -Llib/boost/ -Llib/ckjwt/ -L. ")
 
 # Define the CXX sources
 set ( CXX_SRCS
+    ${CMAKE_CURRENT_LIST_DIR}/source/controls/OcorrenciaControl.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/source/database/dao/DAOOcorrencias.cpp
     ${CMAKE_CURRENT_LIST_DIR}/source/database/dao/DAOComodos.cpp
     ${CMAKE_CURRENT_LIST_DIR}/source/database/dao/DAOUsuarios.cpp
     ${CMAKE_CURRENT_LIST_DIR}/source/database/dao/DAOUsuarioComodo.cpp
     ${CMAKE_CURRENT_LIST_DIR}/source/database/dao/DAOUsuarioSensor.cpp
     ${CMAKE_CURRENT_LIST_DIR}/source/json/serializer/SensorSerializer.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/source/json/OcorrenciaSerializer.cpp
     ${CMAKE_CURRENT_LIST_DIR}/source/json/serializer/UsuarioSerializer.cpp
     ${CMAKE_CURRENT_LIST_DIR}/source/database/dao/DAOSensores.cpp
     ${CMAKE_CURRENT_LIST_DIR}/source/mweb/UsuarioWebRouter.cpp
