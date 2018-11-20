@@ -15,6 +15,7 @@ public:
 	crow::response ListarComodosAcessiveis(const crow::request* request_, crow::response* response_);
 	crow::response create(int idUsuario, int idSensor);
 	crow::response del(int idUsuario, int idSensor);
+	crow::response listar(int idUsuario);
 private:
 	static UsuarioSensorControl* m_This;
 };

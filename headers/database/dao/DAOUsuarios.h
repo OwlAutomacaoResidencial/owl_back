@@ -25,6 +25,7 @@ public:
 	static DAOUsuario* GetDAO();
 	Usuario* Login(std::string login, std::string passwd);
 	Usuario* Register(Usuario* user);
+	Usuario* recuperarUsuario(int idUsuario);
 	std::string GetPerfil(uint16_t cod_user);
 	std::vector<Usuario*> GetUsuarios();
 private:

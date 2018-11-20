@@ -5,6 +5,9 @@
 
 #include "headers/logging/Logger.h"
 
+#include "headers/database/dao/DAOSensores.h"
+#include "headers/sensores/sensor.h"
+
 #include <string>
 #include <sstream>
 #include <vector>
@@ -15,6 +18,7 @@ public:
 	static DAOUsuarioSensor* getDAO();
 	void create(int idUsuario, int idSensor);
 	void del(int idUsuario, int idSensor);
+	const std::vector<Sensor*> GetSensores(int idUsuario);
 private:
 	static DAOUsuarioSensor* m_This;
 };

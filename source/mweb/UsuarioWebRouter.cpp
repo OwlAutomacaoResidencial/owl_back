@@ -37,3 +37,16 @@ void WebRouter::RegisterUsuarioRegister()
 		WebRouter::SignResponse(&response_);
 	});
 }
+
+void WebRouter::RegisterRecuperarUsuario()
+{
+	CROW_ROUTE(app, "/recuperarUsuario/<int>")
+	.methods("GET"_method)
+	([&](const crow::request& req, crow::response& response_, int idUsuario) 
+	{
+		response_ = UsuarioControl::GetControl()->recuperarUsuario(idUsuario);
+		
+		CLogger::GetLogger()->Log("Response Code %d", response_.code);
+		WebRouter::SignResponse(&response_);
+	});
+}

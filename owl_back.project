@@ -14,6 +14,7 @@
     </VirtualDirectory>
     <File Name="headers/Utilities.h"/>
     <VirtualDirectory Name="usuarios">
+      <File Name="headers/usuarios/usuarioSensor.h"/>
       <File Name="headers/usuarios/usuarioComodo.h"/>
       <File Name="headers/usuarios/usuario.h"/>
     </VirtualDirectory>

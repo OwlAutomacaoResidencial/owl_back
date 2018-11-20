@@ -41,6 +41,7 @@ void WebRouter::start_app()
 	RegisterSensorPorComodoRoute();
 	RegisterComodosDisponiveisRoute();
 	
+	RegisterRecuperarUsuario();
 	RegisterUsuarioRegister();
 	
 	RegisterComodoCreate();
@@ -51,6 +52,7 @@ void WebRouter::start_app()
 	
 	registerUsuarioSensorCreate();
 	registerUsuarioSensorDelete();
+	registerSensoresUsuario();
 	
 	registerOcorrencias();
 	

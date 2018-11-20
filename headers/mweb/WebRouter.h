@@ -77,6 +77,7 @@ private:
 	void RegisterComodosDisponiveisRoute();
 	void RegisterSensorPorComodoRoute();
 	
+	void RegisterRecuperarUsuario();
 	void RegisterUsuarioRegister();
 	
 	void RegisterComodoCreate();
@@ -87,6 +88,7 @@ private:
 	
 	void registerUsuarioSensorCreate();
 	void registerUsuarioSensorDelete();
+	void registerSensoresUsuario();
 	
 	void registerOcorrencias();
 	

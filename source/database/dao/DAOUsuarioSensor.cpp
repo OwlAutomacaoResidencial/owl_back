@@ -68,3 +68,33 @@ void DAOUsuarioSensor::del(int idUsuario, int idSensor)
 	
 	delete prep_stmt;
 }
+
+const std::vector<Sensor*> DAOUsuarioSensor::GetSensores(int idUsuario)
+{
+	std::vector<Sensor*> retorno;
+	std::vector<sensor*>::iterator it;
+	
+	it = retorno.begin();
+	
+	sql::PreparedStatement  *prep_stmt;
+	sql::ResultSet *rs;
+	
+	prep_stmt = MySQLConnector::getManager()->getConnection()->prepareStatement("select sensor.* from usuarioSensor inner join sensor ON sensor.idSensor = usuarioSensor.idSensor where idUsuario = ?");
+	prep_stmt->setInt(1, idUsuario);
+	rs = prep_stmt->executeQuery();
+	
+	while(rs->next()) 
+	{
+		Sensor* sensor_ = new Sensor();
+		sensor_->codigo = rs->getInt("idSensor");
+		sensor_->nome = rs->getString("nomeSensor");
+		sensor_->tipo = DAOSensores::GetDAO()->getTipoSensor(rs->getInt("tipo"));
+
+		it = retorno.insert(it, sensor_);
+	}
+	
+	delete prep_stmt;
+	delete rs;
+	
+	return retorno;
+}

@@ -86,6 +86,37 @@ Usuario* DAOUsuario::Login(std::string login, std::string passwd)
 	return NULL;
 }
 
+Usuario* DAOUsuario::recuperarUsuario(int idUsuario)
+{
+	sql::PreparedStatement  *prep_stmt;
+	sql::ResultSet *rs;
+	
+	prep_stmt = MySQLConnector::getManager()->getConnection()->prepareStatement("select * from usuario where idUsuario = ?");
+	prep_stmt->setInt(1, idUsuario);
+	rs = prep_stmt->executeQuery();
+	
+	if (rs->first()) 
+	{
+		CLogger::GetLogger()->Log("Found user %d, returning", idUsuario);
+		//Usuario* usr = static_cast<Usuario*>(malloc(sizeof(Usuario)));
+		Usuario* usr = new Usuario();
+		usr->codigo = rs->getInt("idUsuario");
+		usr->login = rs->getString("login");
+		usr->email = rs->getString("email");
+		usr->nome = rs->getString("nome");
+		usr->perfil = rs->getString("perfil");
+		
+		delete prep_stmt;
+		delete rs;
+		return usr;	
+	}
+	CLogger::GetLogger()->Log("User %d not found", idUsuario);
+	
+	delete prep_stmt;
+	delete rs;
+	return NULL;
+}
+
 Usuario* DAOUsuario::Register(Usuario* user) 
 {
 	sql::PreparedStatement  *prep_stmt;

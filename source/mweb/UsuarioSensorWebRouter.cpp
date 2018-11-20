@@ -47,3 +47,16 @@ void WebRouter::registerUsuarioSensorDelete()
 		WebRouter::SignResponse(&response_);
 	});
 }
+
+void WebRouter::registerSensoresUsuario()
+{
+	CROW_ROUTE(app, "/usuarioSensor/<int>")
+	.methods("GET"_method)
+	([&](const crow::request& req, crow::response& response_, int idUsuario) 
+	{
+		response_ = UsuarioSensorControl::GetControl()->listar(idUsuario);
+		
+		CLogger::GetLogger()->Log("Response Code %d", response_.code);
+		WebRouter::SignResponse(&response_);
+	});
+}

@@ -55,27 +55,28 @@ set(CMAKE_LDFLAGS "${CMAKE_LDFLAGS} -Llib/boost/ -Llib/ckjwt/ -L. ")
 
 # Define the CXX sources
 set ( CXX_SRCS
-    ${CMAKE_CURRENT_LIST_DIR}/source/controls/OcorrenciaControl.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/source/database/dao/DAOOcorrencias.cpp
     ${CMAKE_CURRENT_LIST_DIR}/source/database/dao/DAOComodos.cpp
     ${CMAKE_CURRENT_LIST_DIR}/source/database/dao/DAOUsuarios.cpp
     ${CMAKE_CURRENT_LIST_DIR}/source/database/dao/DAOUsuarioComodo.cpp
     ${CMAKE_CURRENT_LIST_DIR}/source/database/dao/DAOUsuarioSensor.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/source/database/dao/DAOOcorrencias.cpp
     ${CMAKE_CURRENT_LIST_DIR}/source/json/serializer/SensorSerializer.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/source/json/OcorrenciaSerializer.cpp
     ${CMAKE_CURRENT_LIST_DIR}/source/json/serializer/UsuarioSerializer.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/source/json/OcorrenciaSerializer.cpp
     ${CMAKE_CURRENT_LIST_DIR}/source/database/dao/DAOSensores.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/source/controls/ComodoControl.cpp
     ${CMAKE_CURRENT_LIST_DIR}/source/mweb/UsuarioWebRouter.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/source/networking/ClientManager.cpp
     ${CMAKE_CURRENT_LIST_DIR}/source/controls/UsuarioComodoControl.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/source/networking/ClientManager.cpp
     ${CMAKE_CURRENT_LIST_DIR}/source/networking/Client.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/source/json/serializer/ComodoSerializer.cpp
     ${CMAKE_CURRENT_LIST_DIR}/source/mweb/UsuarioSensorWebRouter.cpp
     ${CMAKE_CURRENT_LIST_DIR}/source/json/MWebSessionSerializer.cpp
     ${CMAKE_CURRENT_LIST_DIR}/source/controls/SensorControl.cpp
     ${CMAKE_CURRENT_LIST_DIR}/source/controls/UsuarioControl.cpp
     ${CMAKE_CURRENT_LIST_DIR}/source/logging/Logger.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/source/controls/OcorrenciaControl.cpp
     ${CMAKE_CURRENT_LIST_DIR}/source/enc/md5.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/source/json/serializer/ComodoSerializer.cpp
     ${CMAKE_CURRENT_LIST_DIR}/source/main.cpp
     ${CMAKE_CURRENT_LIST_DIR}/source/networking/Server.cpp
     ${CMAKE_CURRENT_LIST_DIR}/source/database/datasheet.cpp
@@ -85,7 +86,6 @@ set ( CXX_SRCS
     ${CMAKE_CURRENT_LIST_DIR}/source/database/mysql_manager.cpp
     ${CMAKE_CURRENT_LIST_DIR}/source/controls/SessionControl.cpp
     ${CMAKE_CURRENT_LIST_DIR}/source/controls/UsuarioSensorControl.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/source/controls/ComodoControl.cpp
 )
 
 set_source_files_properties(

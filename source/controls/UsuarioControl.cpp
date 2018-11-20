@@ -37,6 +37,26 @@ Usuario* UsuarioControl::Login(const std::string login, const std::string passwd
 	return usr;
 }
 
+crow::response UsuarioControl::recuperarUsuario(int idUsuario)
+{
+	Usuario* usr = DAOUsuario::GetDAO()->recuperarUsuario(idUsuario);
+	
+	if(usr == NULL)
+	{
+		return crow::response(200);
+	}
+	
+	json::StringBuffer buffer;
+	json::Writer<json::StringBuffer> writer(buffer);
+	
+	UsuarioSerializer::GetSerializer()->serialize(&writer, usr);
+	
+	crow::response user_response = crow::response(200);
+	user_response.write(buffer.GetString());
+	
+	return user_response;
+}
+
 crow::response UsuarioControl::Register(const std::string body)
 {
 	Usuario* user = UsuarioSerializer::GetSerializer()->parse(body);
