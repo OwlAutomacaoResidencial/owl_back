@@ -140,7 +140,7 @@
       <Compiler Options="-g;-O0;-Wall" C_Options="-g;-O0;-Wall" Assembler="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" PCHFlags="" PCHFlagsPolicy="0">
         <IncludePath Value="include/"/>
       </Compiler>
-      <Linker Options="-lboost_system -pthread -lboost_thread -lmysqlcppconn -lssl -lcrypto" Required="yes">
+      <Linker Options="-lboost_system -pthread -lboost_thread -lmysqlcppconn -lssl -lcrypto -m32" Required="yes">
         <LibraryPath Value="lib/boost/"/>
         <LibraryPath Value="lib/ckjwt/"/>
       </Linker>
